@@ -1,3 +1,4 @@
+# アプリの実行に必要なものだけを入れています（モデルの学習には requirements-train.txt を使用）
 # 学習済みモデル（models/ipcl_bundle.pkl）を正しく読み込むため、学習時と同じバージョンに固定しています
 numpy==2.4.1
 pandas==2.3.3
@@ -5,12 +6,9 @@ scipy==1.17.0
 scikit-learn==1.6.1
 joblib==1.5.3
 threadpoolctl==3.6.0
-xgboost==3.2.0
-lightgbm==4.6.0
 catboost==1.2.10
 
-# 画面・図・Excel読み込み
+# 画面・図
 streamlit==1.63.0
 pyarrow==25.0.1
 matplotlib==3.10.8
-openpyxl==3.1.5
