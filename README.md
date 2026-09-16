@@ -32,7 +32,7 @@ Streamlit Community Cloud にデプロイすると、**URL を知っている人
 3. **https://share.streamlit.io** を開き、GitHub アカウントで連携する
 4. 「Create app」→ リポジトリを選び、次を指定する
    - **Main file path**: `streamlit_app.py`
-   - **Advanced settings → Python version**: `3.11` ← **必ず指定してください**
+   - **Advanced settings → Python version**: 指定しなくても動きます（`3.11`〜`3.14` のどれでも可）
      （Python のバージョンはこの画面でしか指定できません。`runtime.txt` のようなファイルを
      置いても読まれません）
 5. 「Deploy」を押す（初回は5〜10分ほどかかります）
@@ -48,7 +48,9 @@ Streamlit Community Cloud にデプロイすると、**URL を知っている人
 2. `requirements.txt` で **Streamlit のバージョンを固定していないこと**
    （Streamlit Cloud は Streamlit を自前で管理しているため、`streamlit==1.63.0` のように
    固定すると起動に失敗することがあります。`streamlit` とだけ書きます）
-3. Advanced settings の **Python version が 3.11** になっていること
+3. `requirements.txt` の **scikit-learn が 1.7.2 以上**であること
+   （1.6.1 以下は Python 3.14 用のパッケージが無く、クラウド上でソースからのビルドが始まって
+   約50分かかったうえで起動に失敗します）
 4. それでも進まないときは **Manage app → Reboot app**、
    それでもだめなら一度アプリを削除して作り直す（Delete → Create app）
 
@@ -86,6 +88,10 @@ Streamlit Community Cloud にデプロイすると、**URL を知っている人
 
 詳しい数値はアプリ下部の「モデルの詳細と注意事項」と `models/metrics.json` にあります。
 
+モデルは **scikit-learn 1.7.2 / CatBoost 1.2.10** で作成しています。`requirements.txt` で固定している
+バージョンは、いずれも Python 3.11〜3.14 に対応した版です（クラウド側の Python が新しくても、
+ソースからのビルドが走らずにそのまま入ります）。
+
 ### データを更新してモデルを作り直す場合
 
 クラウド上では学習できません（患者データを置かないため）。手元のパソコンで作り直してください。
@@ -106,7 +112,7 @@ Streamlit Cloud が自動で再起動して新しいモデルになります。
 |---|---|
 | デプロイが進まない・エラーも出ない | 上の「デプロイが進まない・いつまでも起動しないとき」を参照 |
 | 「モデルファイルが見つかりません」 | `models/ipcl_bundle.pkl` がリポジトリに含まれているか確認（GitHub 上でフォルダ構成を確認） |
-| インストールでエラー | Advanced settings の Python version が `3.11` になっているか確認 |
+| インストールに何十分もかかる | `requirements.txt` の scikit-learn が 1.7.2 以上か確認（古い版は Python 3.14 用のパッケージが無く、ソースからのビルドが走ります） |
 | `.gitignore` や `.streamlit` が GitHub に無い | 先頭がドットのファイルは Finder やブラウザで見えないため、アップロード時に漏れがちです。`.gitignore` は患者データを誤って上げないための設定なので、追加をおすすめします |
 | 「Oh no. Error running app.」と表示される | `requirements.txt` で Streamlit のバージョンを固定していないか確認。固定している場合は `streamlit` とだけ書いて Commit し、Reboot app |
 | 「バージョンが異なるライブラリがあります」と表示される | モデル読み込みに関わる行（numpy〜catboost）は変更せずにそのまま使ってください |

@@ -108,10 +108,10 @@ if st.button('予測する', type='primary'):
             res = predict_eye(B, age, v['LV'], v['ACD'], v['ACW'])
             rv = res['recommended_vault']
 
-            c1, c2, c3 = st.columns(3)
-            c1.metric('推奨サイズ', f"{res['recommended_size']:.2f} mm")
-            c2.metric('正しいサイズの確率', f"{res['recommended_prob'] * 100:.0f} %")
-            c3.metric('そのときの予測Vault', f'{rv * 1000:.0f} µm')
+            # 両眼表示だと幅が狭く数値が切れるため、metric は1つだけにして残りは文章で出す
+            st.metric('推奨サイズ', f"{res['recommended_size']:.2f} mm")
+            st.markdown(f"**正しいサイズの確率**: {res['recommended_prob'] * 100:.0f} %　／　"
+                        f"**そのときの予測Vault**: {rv * 1000:.0f} µm")
 
             if VAULT_NARROW[0] <= rv <= VAULT_NARROW[1]:
                 st.success('予測Vaultは狭義の適正域（400–600µm）です。')
