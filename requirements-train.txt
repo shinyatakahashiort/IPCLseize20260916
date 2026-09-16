@@ -1,0 +1,9 @@
+# モデルを学習し直すとき（train_model.py）だけに必要なライブラリです。
+# Streamlit Cloud では使いません（クラウドには重いライブラリを入れないため）。
+#
+#   pip install -r requirements-train.txt
+#
+-r requirements.txt
+xgboost==3.2.0
+lightgbm==4.6.0
+openpyxl==3.1.5
