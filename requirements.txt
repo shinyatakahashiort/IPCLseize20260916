@@ -1,0 +1,17 @@
+# アプリの実行に必要なものだけを入れています（モデルの学習には requirements-train.txt を使用）
+#
+# バージョンを固定するのは、学習済みモデル（models/ipcl_bundle.pkl）の読み込みに
+# 関わるライブラリだけにしています。
+# Streamlit 本体と描画まわりは固定しません。Streamlit Cloud はプラットフォーム側で
+# Streamlit を管理しており、バージョンを固定すると起動に失敗することがあるためです。
+numpy==2.4.1
+pandas==2.3.3
+scipy==1.17.0
+scikit-learn==1.6.1
+joblib==1.5.3
+threadpoolctl==3.6.0
+catboost==1.2.10
+
+# 画面・図（バージョンは固定しない）
+streamlit
+matplotlib
